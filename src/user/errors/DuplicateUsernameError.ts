@@ -11,7 +11,7 @@ export class DuplicateUsernameError extends CustomError {
     return {
       sucess: false,
       status_code: this.statusCode,
-      description: 'Invalid Credencials',
+      description: 'Username already exists',
       timestamp: Date.now(),
     };
   }

@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { Role } from './Role';
+import { Role } from './Role.js';
 
 export type User = {
   _id?: ObjectId;

@@ -1,5 +1,5 @@
-import { Collection, Db, InsertOneResult, ModifyResult, MongoClient, ObjectId, UpdateResult, WithId } from 'mongodb';
-import { User } from '../../domain/user';
+import { Collection, Db, InsertOneResult, MongoClient, ObjectId, UpdateResult } from 'mongodb';
+import { User } from '../../domain/User.js';
 
 export default class UserRepository {
   private db: Db;
@@ -32,6 +32,20 @@ export default class UserRepository {
       return result;
     } catch (error) {
       console.error('Error finding user: ', error);
+      throw error;
+    }
+  }
+
+  async findByUsername(username: string): Promise<User | null> {
+    try {
+      await this.client.connect();
+      const result = await this.collection.findOne({
+        username,
+      });
+
+      return result;
+    } catch (error) {
+      console.error('Error finding user by username: ', error);
       throw error;
     }
   }
@@ -70,7 +84,7 @@ export default class UserRepository {
   async deleteById(_id: ObjectId): Promise<void> {
     try {
       await this.client.connect();
-      const result = await this.collection.deleteOne({
+      await this.collection.deleteOne({
         _id,
       });
     } catch (error) {

@@ -1,6 +1,7 @@
 import fastify from 'fastify';
-import { mongoClient } from './app/mongoClient/MongoClient';
-import routes from './routes';
+import { mongoClient } from './app/mongoClient/MongoClient.js';
+import routes from './routes.js';
+import { startup } from './app/boot/index.js';
 
 const server = fastify();
 
@@ -12,6 +13,8 @@ server.listen({ port: PORT }, (err, address) => {
 server.register(routes);
 
 export { server };
+
+startup();
 
 const cleanup = () => {
   mongoClient.close();

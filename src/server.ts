@@ -3,7 +3,7 @@ import { mongoClient } from './app/mongoClient/MongoClient.js';
 import routes from './routes.js';
 import { startup } from './app/boot/index.js';
 
-const server = fastify();
+const server = fastify({ logger: true });
 
 const PORT = Number(process.env.PORT) || 3000;
 server.listen({ port: PORT, host: '0.0.0.0' }, (err, address) => {

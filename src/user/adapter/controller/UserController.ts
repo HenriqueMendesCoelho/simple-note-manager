@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { User } from '../../domain/User.js';
-import CreateUserUseCase from '../../usecases/create-user/CreateUserUseCase.js';
-import FindUserUseCase from '../../usecases/find-user/FindUserUseCase.js';
 import { camelCase, snakeCase } from 'change-case/keys';
 import { CustomError } from '../../../app/errors/CustomError.js';
+import CreateUserUseCase from '../../usecases/CreateUserUseCase.js';
+import FindUserUseCase from '../../usecases/FindUserUseCase.js';
 
 export default class UserController {
   constructor(private createUserUseCase: CreateUserUseCase, private findUserUseCase: FindUserUseCase) {}

@@ -7,9 +7,8 @@ async function createUniqueIndex() {
     const collection = db.collection('users');
 
     await collection.createIndex({ username: 1 }, { unique: true });
-    console.log('Unique index created successfully');
   } catch (error) {
-    console.error('Error creating unique index: ', error);
+    console.error('Error creating users unique index: ', error);
   }
 }
 

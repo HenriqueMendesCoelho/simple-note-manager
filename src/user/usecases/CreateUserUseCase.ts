@@ -1,9 +1,9 @@
 import { MongoServerError } from 'mongodb';
-import EncryptUtil from '../../../util/EncryptUtil.js';
-import UserRepository from '../../adapter/repository/UserRepository.js';
-import { Role } from '../../domain/Role.js';
-import { User } from '../../domain/User.js';
-import { DuplicateUsernameError } from '../../errors/DuplicateUsernameError.js';
+import EncryptUtil from '../../util/EncryptUtil.js';
+import UserRepository from '../adapter/repository/UserRepository.js';
+import { Role } from '../domain/Role.js';
+import { User } from '../domain/User.js';
+import { DuplicateUsernameError } from '../errors/DuplicateUsernameError.js';
 
 export default class CreateUserUseCase {
   constructor(private userRepository: UserRepository) {}

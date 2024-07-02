@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
-import UserRepository from '../../adapter/repository/UserRepository.js';
-import { User } from '../../domain/User.js';
+import UserRepository from '../adapter/repository/UserRepository.js';
+import { User } from '../domain/User.js';
 
 export default class FindUserUseCase {
   constructor(private userRepository: UserRepository) {}

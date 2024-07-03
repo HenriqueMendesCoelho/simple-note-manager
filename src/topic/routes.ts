@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { topicController as controller } from './index.js';
-import { validateJwt } from '../app/hooks/VerifyJwtToken.js';
+import { validateJwt } from '../app/middlewares/VerifyJwtToken.js';
 import TopicRequestSchema from './adapter/controller/schemas/TopicRequestSchema.js';
 
 async function topicRoutes(fastify: FastifyInstance) {

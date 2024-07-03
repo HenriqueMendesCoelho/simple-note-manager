@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { userController as controller } from './index.js';
 import UserRequestSchema from './adapter/controller/schemas/UserRequestSchema.js';
-import { validateJwt, validateJwtAdmin } from '../app/hooks/VerifyJwtToken.js';
+import { validateJwt, validateJwtAdmin } from '../app/middlewares/VerifyJwtToken.js';
 
 async function userRoutes(fastify: FastifyInstance) {
   fastify.get('/:id', { preHandler: [validateJwt] }, async (request: FastifyRequest, reply: FastifyReply) => {

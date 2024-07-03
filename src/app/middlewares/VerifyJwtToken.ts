@@ -51,8 +51,6 @@ function validateJwtAdmin(request: FastifyRequest, reply: FastifyReply, done: Ho
 }
 
 function isValid(token: string) {
-  token = token.slice(7);
-
   try {
     const isValid = getPayload(token);
     if (!isValid) {
@@ -70,12 +68,13 @@ function isAdminValid(token: string) {
 
     return payload.roles.includes(Role.ADMIN) && Date.now() < payload.exp;
   } catch (error) {
-    return false;
+    throw error;
   }
 }
 
 function getPayload(token: string): PayloadToken {
   try {
+    token = token.slice(7);
     const payload = jwt.verify(token, secret!) as PayloadToken;
 
     return payload;

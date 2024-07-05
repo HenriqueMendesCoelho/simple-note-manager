@@ -1,28 +1,28 @@
 import { Db, Collection, MongoClient, InsertOneResult, ObjectId, UpdateResult } from 'mongodb';
-import { Topic } from '../../domain/Topic.js';
+import { TopicNote } from '../../domain/TopicNote.js';
 
-export class TopicRepository {
+export class TopicNoteRepository {
   private db: Db;
-  private collection: Collection<Topic>;
+  private collection: Collection<TopicNote>;
 
   constructor(private client: MongoClient) {
     this.db = this.client.db('simple-note-manager');
-    this.collection = this.db.collection('topics');
+    this.collection = this.db.collection('topics-notes');
   }
 
-  async create(user: Topic): Promise<InsertOneResult<Topic>> {
+  async create(topicNote: TopicNote): Promise<InsertOneResult<TopicNote>> {
     try {
       await this.client.connect();
-      const result = await this.collection.insertOne(user);
+      const result = await this.collection.insertOne(topicNote);
 
       return result;
     } catch (error) {
-      console.error('Error creating topic: ', error);
+      console.error('Error creating topic note: ', error);
       throw error;
     }
   }
 
-  async findById(id: ObjectId): Promise<Topic | null> {
+  async findById(id: ObjectId): Promise<TopicNote | null> {
     try {
       await this.client.connect();
       const result = await this.collection.findOne({
@@ -31,24 +31,24 @@ export class TopicRepository {
 
       return result;
     } catch (error) {
-      console.error(`Error finding topic with id: ${id}`, error);
+      console.error(`Error finding topic note with id: ${id}`, error);
       throw error;
     }
   }
 
-  async findAll(): Promise<Topic[]> {
+  async findAll(topicId: ObjectId): Promise<TopicNote[]> {
     try {
       await this.client.connect();
-      const result = await this.collection.find().sort({ title: 1, createdAt: -1 }).toArray();
+      const result = await this.collection.find({ topicId: topicId }).sort({ title: 1, createdAt: -1 }).toArray();
 
       return result;
     } catch (error) {
-      console.error('Error finding topic: ', error);
+      console.error('Error finding topic note: ', error);
       throw error;
     }
   }
 
-  async update(_id: ObjectId, topic: Partial<Topic>): Promise<UpdateResult<Topic>> {
+  async update(_id: ObjectId, topicNote: Partial<TopicNote>): Promise<UpdateResult<TopicNote>> {
     try {
       await this.client.connect();
       const result = await this.collection.updateOne(
@@ -56,13 +56,13 @@ export class TopicRepository {
           _id,
         },
         {
-          $set: topic,
+          $set: topicNote,
         }
       );
 
       return result;
     } catch (error) {
-      console.error('Error updating topic: ', error);
+      console.error('Error updating topic note: ', error);
       throw error;
     }
   }
@@ -74,7 +74,7 @@ export class TopicRepository {
         _id,
       });
     } catch (error) {
-      console.error(`Error deleting topic with id: ${_id}`, error);
+      console.error(`Error deleting topic note with id: ${_id}`, error);
       throw error;
     }
   }

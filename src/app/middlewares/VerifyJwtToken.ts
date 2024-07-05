@@ -1,20 +1,6 @@
 import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
-import jwt from 'jsonwebtoken';
 import { Role } from '../../user/domain/Role.js';
-
-const secret = process.env.JWT_SECRET;
-if (!secret) {
-  throw new Error('Please define the JWT_SECRET environment variable');
-}
-
-type PayloadToken = {
-  exp: number;
-  issuer: string;
-  audience: string;
-  username: string;
-  iat: number;
-  roles: string[];
-};
+import { getPayloadAndVerify } from '../../util/TokenUtil.js';
 
 function validateJwt(request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction) {
   const jwt = request.headers['authorization'];
@@ -52,11 +38,8 @@ function validateJwtAdmin(request: FastifyRequest, reply: FastifyReply, done: Ho
 
 function isValid(token: string) {
   try {
-    const isValid = getPayload(token);
-    if (!isValid) {
-      return false;
-    }
-    return Date.now() < isValid.exp;
+    const isValid = getPayloadAndVerify(token);
+    return !!isValid;
   } catch {
     return false;
   }
@@ -64,20 +47,9 @@ function isValid(token: string) {
 
 function isAdminValid(token: string) {
   try {
-    const payload = getPayload(token);
+    const payload = getPayloadAndVerify(token);
 
-    return payload.roles.includes(Role.ADMIN) && Date.now() < payload.exp;
-  } catch (error) {
-    throw error;
-  }
-}
-
-function getPayload(token: string): PayloadToken {
-  try {
-    token = token.slice(7);
-    const payload = jwt.verify(token, secret!) as PayloadToken;
-
-    return payload;
+    return !!payload && payload.roles.includes(Role.ADMIN);
   } catch (error) {
     throw error;
   }

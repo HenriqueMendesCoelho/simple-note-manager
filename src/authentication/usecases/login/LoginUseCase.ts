@@ -32,10 +32,11 @@ export default class LoginUseCase {
   }
 
   private generateToken(user: User, exp: Date): string {
+    const expInSeconds = Math.floor(exp.getTime() / 1000);
     return jwt.sign(
       {
         id: user._id,
-        exp: exp.getTime(),
+        exp: expInSeconds,
         iss: this.issuer,
         aud: this.audience,
         username: user.username,

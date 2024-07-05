@@ -1,13 +1,13 @@
 import { CustomError } from '../../app/errors/CustomError.js';
 
-export class DuplicateUsernameError extends CustomError {
+export class DuplicateTopicNoteError extends CustomError {
   statusCode = 409;
-  private description: string;
+  description: string;
 
-  constructor(message = 'Username already exists') {
+  constructor(message = 'Topic Note title already exists for this topic') {
     super(message);
     this.description = message;
-    Object.setPrototypeOf(this, DuplicateUsernameError.prototype);
+    Object.setPrototypeOf(this, DuplicateTopicNoteError.prototype);
   }
   serializeErrors() {
     return {

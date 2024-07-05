@@ -3,6 +3,8 @@ import { mongoClient } from './app/mongoClient/MongoClient.js';
 import routes from './routes.js';
 import startup from './app/boot/index.js';
 import cors from '@fastify/cors';
+import { logger } from './app/middlewares/logger.js';
+import { snakeCaseConverter, camelCaseConverter } from './app/middlewares/caseConverter.js';
 
 const server = fastify();
 
@@ -15,14 +17,9 @@ server.register(cors, {
   origin: '*',
 });
 
-server.addHook('onResponse', (request, reply, done) => {
-  const { method, url } = request.raw;
-  const { statusCode } = reply;
-  const ip = request.ip;
-  console.info(`[${statusCode}][${method}]${url}[from:${ip}]`);
-
-  done();
-});
+server.addHook('onResponse', logger);
+server.addHook('preSerialization', snakeCaseConverter);
+server.addHook('preHandler', camelCaseConverter);
 
 server.register(routes);
 

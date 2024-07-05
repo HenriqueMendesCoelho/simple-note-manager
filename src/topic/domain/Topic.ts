@@ -4,6 +4,6 @@ export type Topic = {
   _id?: ObjectId;
   title: string;
   description?: string;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 };

@@ -6,6 +6,6 @@ export type User = {
   username: string;
   password?: string;
   roles?: Role[];
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 };

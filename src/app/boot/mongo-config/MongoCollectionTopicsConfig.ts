@@ -7,6 +7,8 @@ async function createUniqueIndex() {
     const collection = db.collection('topics');
 
     await collection.createIndex({ title: 1 }, { unique: true });
+    await collection.createIndex({ 'upVote.userId': 1 }, { unique: true });
+    await collection.createIndex({ 'downVote.userId': 1 }, { unique: true });
   } catch (error) {
     console.error('Error creating topics unique index: ', error);
   }

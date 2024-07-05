@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const secret = process.env.JWT_SECRET;
+const TOKEN_MAX_AGE_HOURS = process.env.TOKEN_MAX_AGE_HOURS;
 
 export type PayloadToken = {
   exp: number;
@@ -16,10 +17,14 @@ export const getPayloadAndVerify = (token: string): PayloadToken => {
     if (!secret) {
       throw new Error('Please define the JWT_SECRET environment variable');
     }
+    if (!TOKEN_MAX_AGE_HOURS) {
+      throw new Error('Please define the TOKEN_MAX_AGE environment variable');
+    }
+
     const options = {
       issuer: 'Simple Note Manager api',
       audience: 'Simple Note Manager user',
-      maxAge: '2h',
+      maxAge: TOKEN_MAX_AGE_HOURS,
     };
 
     token = token.slice(7);

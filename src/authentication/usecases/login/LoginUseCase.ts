@@ -9,9 +9,9 @@ import { User } from '../../../user/domain/User.js';
 export default class LoginUseCase {
   constructor(private userRepository: UserRepository) {}
   private readonly secret = process.env.JWT_SECRET;
+  private readonly tokenMaxAgeHours = process.env.TOKEN_MAX_AGE_HOURS;
   private readonly issuer = 'Simple Note Manager api';
   private readonly audience = 'Simple Note Manager user';
-  private readonly expHours = 2;
 
   async execute(login: Login): Promise<Token> {
     const user = await this.userRepository.findByUsername(login.username);
@@ -22,7 +22,7 @@ export default class LoginUseCase {
       throw new InvalidCredencialsError();
     }
     const exp = new Date();
-    exp.setHours(exp.getHours() + this.expHours);
+    exp.setHours(exp.getHours() + parseInt(this.tokenMaxAgeHours!));
     const token = this.generateToken(user, exp);
 
     return {

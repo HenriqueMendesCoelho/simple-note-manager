@@ -3,8 +3,8 @@ import { mongoClient } from './app/mongoClient/MongoClient.js';
 import routes from './routes.js';
 import startup from './app/boot/index.js';
 import cors from '@fastify/cors';
-import { logger } from './app/middlewares/logger.js';
-import { snakeCaseConverter, camelCaseConverter } from './app/middlewares/caseConverter.js';
+import { logger } from './app/middlewares/Logger.js';
+import { snakeCaseConverter, camelCaseConverter } from './app/middlewares/CaseConverter.js';
 
 const server = fastify();
 

@@ -1,10 +1,10 @@
 import UserRepository from '../../../user/adapter/repository/UserRepository.js';
-import { toISOStringWithTimezone } from '../../../util/DateUtil.js';
 import { Login, Token } from '../../domain/Login.js';
 import jwt from 'jsonwebtoken';
 import { InvalidCredencialsError } from '../../errors/InvalidCredencialsError.js';
 import EncryptUtil from '../../../util/EncryptUtil.js';
 import { User } from '../../../user/domain/User.js';
+import dayjs from 'dayjs';
 
 export default class LoginUseCase {
   constructor(private userRepository: UserRepository) {}
@@ -27,7 +27,7 @@ export default class LoginUseCase {
 
     return {
       acesssToken: token,
-      expires: toISOStringWithTimezone(exp),
+      expires: dayjs(exp).format(),
     };
   }
 

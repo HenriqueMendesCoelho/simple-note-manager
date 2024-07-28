@@ -10,8 +10,8 @@
   },
   "type": "module",
   "keywords": [],
-  "author": "",
-  "license": "UNLICENSED",
+  "author": "Henrique Mendes <https://github.com/HenriqueMendesCoelho>",
+  "license": "MIT",
   "dependencies": {
     "@fastify/cors": "^9.0.1",
     "change-case": "^5.4.4",

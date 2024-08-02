@@ -4,6 +4,6 @@ export type Login = {
 };
 
 export type Token = {
-  acesssToken: string;
+  accessToken: string;
   expires: string;
 };

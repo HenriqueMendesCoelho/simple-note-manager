@@ -26,7 +26,7 @@ export default class LoginUseCase {
     const token = this.generateToken(user, exp);
 
     return {
-      acesssToken: token,
+      accessToken: token,
       expires: dayjs(exp).format(),
     };
   }

@@ -5,7 +5,7 @@ import { getPayloadAndVerify } from '../../util/TokenUtil.js';
 function validateJwt(request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction) {
   const jwt = request.headers['authorization'];
 
-  if (!jwt) {
+  if (!jwt || jwt.includes('null')) {
     reply.code(401).send();
     return;
   }

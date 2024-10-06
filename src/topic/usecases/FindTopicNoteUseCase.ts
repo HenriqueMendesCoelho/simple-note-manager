@@ -6,6 +6,6 @@ export class FindTopicNoteUseCase {
   constructor(private repository: TopicNoteRepository) {}
 
   async findAll(topicId: string): Promise<TopicNote[]> {
-    return await this.repository.findAll(new ObjectId(topicId));
+    return await this.repository.findAllByTopicId(new ObjectId(topicId));
   }
 }

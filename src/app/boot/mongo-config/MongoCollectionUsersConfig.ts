@@ -1,4 +1,4 @@
-import { mongoClient as client } from '../../mongoClient/MongoClient.js';
+import { mongoClient as client } from '../../mongoClient/index.js';
 
 async function createUniqueIndex() {
   try {

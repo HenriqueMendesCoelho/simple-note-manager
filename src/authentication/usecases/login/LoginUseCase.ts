@@ -5,11 +5,12 @@ import { InvalidCredencialsError } from '../../errors/InvalidCredencialsError.js
 import EncryptUtil from '../../../util/EncryptUtil.js';
 import { User } from '../../../user/domain/User.js';
 import dayjs from 'dayjs';
+import { environment } from '../../../app.js';
 
 export default class LoginUseCase {
   constructor(private userRepository: UserRepository) {}
-  private readonly secret = process.env.JWT_SECRET;
-  private readonly tokenMaxAgeHours = process.env.TOKEN_MAX_AGE_HOURS;
+  private readonly secret = environment.JWT_SECRET;
+  private readonly tokenMaxAgeHours = environment.TOKEN_MAX_AGE_HOURS;
   private readonly issuer = 'Simple Note Manager api';
   private readonly audience = 'Simple Note Manager user';
 

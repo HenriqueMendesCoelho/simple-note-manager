@@ -1,4 +1,4 @@
-import { mongoClient } from '../app/mongoClient/MongoClient.js';
+import { mongoClient } from '../app/mongoClient/index.js';
 
 import { TopicRepository } from './adapter/repository/TopicRepository.js';
 import { FindTopicNoteUseCase } from './usecases/FindTopicNoteUseCase.js';
@@ -14,28 +14,45 @@ import { DeleteTopicUseCase } from './usecases/DeleteTopicUseCase.js';
 
 import TopicController from './adapter/controller/TopicController.js';
 
-const topicRepository = new TopicRepository(mongoClient);
-const createTopicUseCase = new CreateTopicUseCase(topicRepository);
-const findTopicUseCase = new FindTopicUseCase(topicRepository);
-const updateTopicUseCase = new UpdateTopicUseCase(topicRepository);
-const deleteTopicUseCase = new DeleteTopicUseCase(topicRepository);
+let topicRepository: TopicRepository;
+let createTopicUseCase: CreateTopicUseCase;
+let findTopicUseCase: FindTopicUseCase;
+let updateTopicUseCase: UpdateTopicUseCase;
+let deleteTopicUseCase: DeleteTopicUseCase;
 
-const topicNoteRepository = new TopicNoteRepository(mongoClient);
-const createTopicNoteUseCase = new CreateTopicNoteUseCase(topicNoteRepository, topicRepository);
-const findTopicNoteUseCase = new FindTopicNoteUseCase(topicNoteRepository);
-const updateTopicNoteUseCase = new UpdateTopicNoteUseCase(topicNoteRepository);
-const deleteTopicNoteUseCase = new DeleteTopicNoteUseCase(topicNoteRepository);
+let topicNoteRepository: TopicNoteRepository;
+let createTopicNoteUseCase: CreateTopicNoteUseCase;
+let findTopicNoteUseCase: FindTopicNoteUseCase;
+let updateTopicNoteUseCase: UpdateTopicNoteUseCase;
+let deleteTopicNoteUseCase: DeleteTopicNoteUseCase;
 
-export const topicController = new TopicController(
-  createTopicUseCase,
-  findTopicUseCase,
-  updateTopicUseCase,
-  deleteTopicUseCase,
-  createTopicNoteUseCase,
-  findTopicNoteUseCase,
-  updateTopicNoteUseCase,
-  deleteTopicNoteUseCase
-);
+let topicController: TopicController;
+
+function initializeTopicDependencies() {
+  topicRepository = new TopicRepository(mongoClient);
+  createTopicUseCase = new CreateTopicUseCase(topicRepository);
+  findTopicUseCase = new FindTopicUseCase(topicRepository);
+  updateTopicUseCase = new UpdateTopicUseCase(topicRepository);
+  deleteTopicUseCase = new DeleteTopicUseCase(topicRepository);
+
+  topicNoteRepository = new TopicNoteRepository(mongoClient);
+  createTopicNoteUseCase = new CreateTopicNoteUseCase(topicNoteRepository, topicRepository);
+  findTopicNoteUseCase = new FindTopicNoteUseCase(topicNoteRepository);
+  updateTopicNoteUseCase = new UpdateTopicNoteUseCase(topicNoteRepository);
+  deleteTopicNoteUseCase = new DeleteTopicNoteUseCase(topicNoteRepository);
+
+  topicController = new TopicController(
+    createTopicUseCase,
+    findTopicUseCase,
+    updateTopicUseCase,
+    deleteTopicUseCase,
+    createTopicNoteUseCase,
+    findTopicNoteUseCase,
+    updateTopicNoteUseCase,
+    deleteTopicNoteUseCase
+  );
+}
 
 export { topicRepository, findTopicUseCase, createTopicUseCase, updateTopicUseCase, deleteTopicUseCase };
 export { topicNoteRepository, findTopicNoteUseCase, createTopicNoteUseCase, updateTopicNoteUseCase, deleteTopicNoteUseCase };
+export { topicController, initializeTopicDependencies };

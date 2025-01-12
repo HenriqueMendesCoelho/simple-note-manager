@@ -39,9 +39,23 @@ export default class TopicController {
       reply.status(500).send({ message: 'Internal server error' });
     }
   }
+
   async findAll(request: FastifyRequest, reply: FastifyReply) {
     const topics = await this.findTopicUseCase.findAll();
     if (!topics?.length) {
+      reply.status(204).send();
+      return;
+    }
+
+    reply.send(topics);
+  }
+
+  async findById(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = request.params as { id: string };
+
+    const topics = await this.findTopicUseCase.findById(id);
+
+    if (!topics) {
       reply.status(204).send();
       return;
     }

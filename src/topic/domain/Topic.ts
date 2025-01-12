@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { TopicNote } from './TopicNote.js';
 
 export type Topic = {
   _id?: ObjectId;
@@ -6,4 +7,5 @@ export type Topic = {
   description?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  notes?: TopicNote[];
 };

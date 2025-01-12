@@ -14,7 +14,7 @@ export default class UserRepository extends GenericRepository<User> {
         username,
       });
 
-      return result;
+      return this.safeObject(result);
     } catch (error) {
       console.error('Error finding user by username: ', error);
       throw error;

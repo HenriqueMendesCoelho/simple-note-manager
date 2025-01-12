@@ -14,6 +14,11 @@ async function topicRoutes(fastify: FastifyInstance) {
     reply.send(res);
   });
 
+  fastify.get('/:id', { preHandler: [validateJwt] }, async (request: FastifyRequest, reply: FastifyReply) => {
+    const res = await controller.findById(request, reply);
+    reply.send(res);
+  });
+
   fastify.put('/:id', { schema: TopicRequestSchema, preHandler: [validateJwt] }, async (request: FastifyRequest, reply: FastifyReply) => {
     const res = await controller.update(request, reply);
     reply.send(res);

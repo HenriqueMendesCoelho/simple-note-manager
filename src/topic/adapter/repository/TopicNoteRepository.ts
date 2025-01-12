@@ -12,7 +12,7 @@ export class TopicNoteRepository extends GenericRepository<TopicNote> {
       await this.client.connect();
       const result = await this.collection.find({ topicId: topicId }).sort({ title: 1, createdAt: -1 }).toArray();
 
-      return result;
+      return this.safeObject(result);
     } catch (error) {
       console.error('Error finding topic note: ', error);
       throw error;
